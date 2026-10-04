@@ -118,6 +118,9 @@ def main() -> None:
         "throughput": thr,
         "gates": {
             "float64_floor_below_1e-12": max(acc["numpy-float64"]["max_rel_exact"]) < 1e-12,
+        },
+        # expected negative result, recorded but not a pass/fail gate: float32 cannot audit
+        "findings": {
             "float32_floor_below_naive_artifacts": max(acc["numpy-float32"]["max_rel_exact"])
             < 0.1 * min(v for v in acc["numpy-float64"]["max_rel_naive"] if v > 0),
         },

@@ -39,6 +39,13 @@ python -m pytest
 python experiments/EXP-0004_parametric_modulation/run.py
 ```
 
+**GPU (optional).** Parameter sweeps use the batched solver `FDTD1DBatch`, which has
+numpy, torch (CUDA) and cupy backends. To use an NVIDIA GPU, create an isolated
+environment with `pip install numpy scipy matplotlib pytest` and
+`pip install torch --index-url https://download.pytorch.org/whl/cu126`, then
+`pip install -e .`. Experiments with `backend="auto"` pick the GPU automatically.
+Audits stay in float64 (see EXP-0003b).
+
 ```python
 import math
 from cavitylab import FDTD1D, Modulation, EnergyAudit
@@ -63,8 +70,10 @@ print(EnergyAudit.from_fdtd(result, naive=True).report())  # naive ledger: spuri
 | [EXP-0001](experiments/EXP-0001_analytic_modes/conclusion.md) | Analytic 1D modes | ✅ | ω_FDTD equals Yee dispersion to 3e-12 |
 | [EXP-0002](experiments/EXP-0002_fdtd_convergence/conclusion.md) | FDTD convergence | ✅ | Order 2.00; magic step exact |
 | [EXP-0003](experiments/EXP-0003_static_energy_balance/conclusion.md) | Static energy balance | ✅ | Exact ≤ 2e-12; naive false gain +1.6e-4 in a passive cavity |
+| [EXP-0003b](experiments/EXP-0003b_precision_and_acceleration/conclusion.md) | Ledger precision + GPU throughput | ✅ | float64 floor 1e-13 (CPU = GPU); float32 unfit for audits; GPU ~6× faster for large batches |
 | [EXP-0004](experiments/EXP-0004_parametric_modulation/conclusion.md) | Parametric modulation | ✅ | Floquet from FDTD equals Hill theory; δ_th = 2/Q; multimode stress test |
-| [EXP-0005](experiments/EXP-0005_parametric_sweep/conclusion.md) | (Ω/ω, δ) resonance map + dataset | ✅ | 100% stability agreement; naive ledger shows "gain" at most points |
+| [EXP-0004c](experiments/EXP-0004c_multimode_converged/conclusion.md) | Converged multimode vs independent solver | ✅ | FDTD → 4th-order MOL at order 1.995 |
+| [EXP-0005](experiments/EXP-0005_parametric_sweep/conclusion.md) | (Ω/ω, δ) resonance maps + dataset (GPU) | ✅ | 100% stability agreement; naive "gain" at 92% of points; ν = 1 tongue absent for ε(t) |
 | [EXP-0005b](experiments/EXP-0005b_optimizer_exploit/conclusion.md) | Optimizer exploiting a naive ledger | ✅ | Apparent +154% "gain" on coarse grids; 5/5 candidates rejected by the audit |
 | [EXP-0006](experiments/EXP-0006_quantum_dce_gaussian/conclusion.md) | Quantum DCE (Gaussian) | ✅ part 1 | Ergotropy / pump work = 1 − δ_th/δ; classical FDTD predicts vacuum photons |
 

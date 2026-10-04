@@ -40,12 +40,12 @@ classical FDTD transfer matrix that predicts vacuum photon numbers. See §7.
 | # | Claim | Evidence | Status |
 |---|---|---|---|
 | C1 | The Yee scheme with ε(x,t), σ, soft sources and ports satisfies an exact discrete energy balance. The pump term is `½DⁿD^{n+1}(1/ε^{n+1}−1/εⁿ)Δx`. | Derivation ([theory](../theory/discrete_energy_identity.md)); EXP-0003/0004/0005 residuals of 1e-15 to 1e-12, growing like n_steps·ε | ✅ done |
-| C2 | Naive ledgers produce residuals of O(Δt²) (time-averaged energy) or O(Δt) (left-point work and dissipation), at the 10⁻⁵ to 10⁻² level, **with either sign**. Positive values read as false net gain, even in a passive decaying cavity. | EXP-0003 (orders 2.1 / 0.9 / 1.2; B: +1.6e-4), EXP-0004 (+3.7e-4 at δ = 0.04; +0.35% of input in the multimode case), EXP-0005 map | ✅ done (map pending final run) |
+| C2 | Naive ledgers produce residuals of O(Δt²) (time-averaged energy) or O(Δt) (left-point work and dissipation), at the 10⁻⁵ to 10⁻¹ level, **biased toward false gain**. | EXP-0003 (orders 2.1 / 0.9 / 1.2; passive cavity +1.6e-4), EXP-0004 (+3.7e-4 at δ = 0.04), EXP-0005 (gain at 92% of 688 map points, max +13.7%, order 0.97) | ✅ done |
 | C3 | The solver and ledger reproduce Hill/Floquet theory for uniform modulation: tongues, threshold δ_th = 2/Q, both Floquet branches. FDTD converges to the ODE at second order. | EXP-0004A (rates within 0.1% of ω/Q; order 2.00), EXP-0005 map | ✅ done |
 | C4 | Ledger closure is necessary, not sufficient. In an equidistant-spectrum multimode case the ledger closes while the solution is unresolved. Convergence plus an independent reference are required. | EXP-0004B (W/W₀ diverges with N; centroid of modal energy) | ✅ done (negative result) |
 | C5 | A naive ledger inside an optimization loop is exploited: the optimizer finds "over-unity" designs that the exact ledger and refinement reject. | EXP-0005b: naive objective > 0 in 93% of 300 trials; best +154% of the energy scale; optimizer picks the coarsest grids; 5/5 top candidates rejected (first-order decay); exact ≤ 1.5e-14 | ✅ done |
 | C6 | A widely used open-source FDTD code's energy diagnostics behave like a naive ledger under ε(t). | Planned: Meep check | ⏳ to do (R4). Include only if verified in source code. |
-| C7 | A converged multimode benchmark (non-equidistant spectrum) agrees with an independent coupled-mode solver. | Planned | ⏳ to do (R2) |
+| C7 | A converged multimode benchmark (non-equidistant spectrum) agrees with an independent solver. | EXP-0004c: FDTD → 4th-order MOL/DOP853 at order 1.995, error 8.1e-5 at N = 1600; reference self-converged to 2e-7 | ✅ done |
 
 ## 3. Remaining work before submission
 
@@ -53,16 +53,16 @@ Items are in order of information gain per effort.
 
 | ID | Task | Output | Effort | Gate |
 |---|---|---|---|---|
-| R1 | Finish EXP-0005 (running) and write its conclusion; make figures publication-grade | Fig. resonance map + naive map | 0.5 d | Stability agreement ≥ 98%, exact ledger PASS |
-| R2 | **EXP-0004c, converged multimode benchmark.** Dielectric-loaded cavity (non-equidistant spectrum) with a modulated slab, compared against an independent coupled-mode ODE solver built from the discrete eigenmodes | Second-solver validation (the "independent validation" rule) | 2–3 d | W(t) converges at 2nd order; agrees with the coupled-mode solver to < 1% |
+| R1 ✅ | EXP-0005 rerun on GPU (387 s): two maps, 100% stability agreement, dataset; conclusion written | — | done | — |
+| R2 ✅ | **EXP-0004c** done with an independent method-of-lines solver (4th-order FD + DOP853) instead of a coupled-mode solver | Second-solver validation | done | Order 1.995 |
 | R3 ✅ | **EXP-0005b, optimizer exploit demo (done 2026-10-04).** Random search or Optuna over (ν, δ, N, S, slab position), maximizing the naive `E_net/E_in`. Re-audit the top-k candidates with the exact ledger, refinement and float64 | The "how artifacts become discoveries" figure; motivates C5 | 1–2 d | Every naive "gain" rejected; report the rejection rate |
 | R4 | **Meep check.** Implement uniform ε(t) in Meep; compare `field_energy_in_box` with the exact ledger. Read the Meep source to learn the H time alignment | C6, or drop it | 2 d | Stated only if reproducible; otherwise omitted |
-| R5 | Precision study: float32 vs float64 (GPU relevance), and Kahan summation of the ledger | Table: residual floor vs precision and steps | 0.5 d | Documented floor |
+| R5 ✅ | **EXP-0003b**: float64 floor ~1e-13 (CPU = GPU); float32 floor 1e-5 to 1e-3, too high for audits even with a float64 ledger. GPU float64 ~6× the best CPU for large batches | Policy: audits in float64; GPU for batches ≥ 2048 | done | — |
 | R6 | Prior-art full-text checks: Sarkar (2022), Taravati et al. (2019, 2024), the MOTL Poynting-FDTD paper, Dodonov & Klimov (1996) on the 1D cascade | Updated novelty statement | 1 d | No overlooked prior derivation of the pump term |
 | R7 | Reproducibility package: CI (GitHub Actions, pytest + all EXP runs), `v0.1.0` tag, Zenodo DOI, `environment.yml`, `make reproduce` | DOI cited in the paper | 1 d | A clean-machine run reproduces all figures |
 | R8 | Writing: draft from [papers/preprint-01/outline.md](../../papers/preprint-01/outline.md); internal adversarial review (checklist §5) | `papers/preprint-01/main.tex` | 4–5 d | All numbers come from committed `metrics.json` |
 
-**Critical path:** R1 → R2 → R6 → R8 → R7 (R3 done). About **2–3 weeks** at a steady part-time
+**Critical path (updated):** R6 (prior-art full texts, plus the ν = 1 tongue literature check) → R8 (writing; draft exists) → R7 (CI, tag, Zenodo DOI). About **1–2 weeks** part-time. R4 (Meep) is optional
 pace. R4 is optional and must not block submission.
 
 ## 4. Planned figures
@@ -104,7 +104,9 @@ pace. R4 is optional and must not block submission.
 | 0002 | Convergence | Order 2.00 (S = 0.25/0.5/0.9); magic step exact | ✅ |
 | 0003 | Static balance | Exact ≤ 1.9e-12; naive 2e-5 to 3e-4, including a **+1.6e-4 false gain** in a passive cavity; Q = 50.001 | ✅ |
 | 0004 | Parametric modulation | Floquet from FDTD = theory (≤ 0.1% of ω/Q); threshold 2/Q; order 2.00 vs ODE; multimode cascade ledger 4e-15 but not converged (negative result) | ✅ |
-| 0005 | (ν, δ) sweep + dataset | *Running*: tongue map, naive false-gain map, 688-row audited CSV | ⏳ |
+| 0005 | (ν, δ) maps + dataset (GPU) | 100% stability agreement (2898 Floquet points); naive gain at 92% of points; **ν = 1 tongue absent for ε(t) modulation** (theory and FDTD; literature check pending) | ✅ |
+| 0004c | Independent solver, converged multimode | FDTD vs 4th-order MOL: order 1.995, error 8e-5 | ✅ |
+| 0003b | Precision + GPU | float64 floor 1e-13; float32 unfit for audits; GPU 6× (f64) / 11× (f32) the best CPU | ✅ |
 | 0005b | Optimizer exploit | The naive objective finds +154% false gain on the coarsest grids; all top candidates rejected by the audit | ✅ |
 | 0006 | Quantum DCE (Gaussian) | N = sinh²(δτ/4); FDTD transfer matrix predicts vacuum photons (order ~1.9); **ergotropy/pump work = 1 − δ_th/δ** | ✅ |
 
@@ -137,5 +139,9 @@ pace. R4 is optional and must not block submission.
 8. **License kept as MIT** (already in the repository). The proposal suggested
    evaluating BSD/Apache. MIT is permissive and compatible; revisit if Meep (GPL)
    code is ever vendored, though calling it as an external package is fine.
-9. **Nothing pushed to GitHub.** Commits are local only. Publishing is the owner's
+9. **Commits and pushes are made by the owner only** (since 2026-10-04). Claude prepares
+   changes; the owner commits. The history was cleaned of co-author trailers. Publishing is the owner's
    call.
+10. **GPU acceleration:** batched FDTD with a torch/CUDA backend in an isolated
+    `.venv-gpu` (CuPy is blocked by the Windows application-control policy; torch's
+    OpenMP clashes with Anaconda's MKL). Audits stay in float64.

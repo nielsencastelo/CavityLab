@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-0001",
-  "date_utc": "2026-10-04T12:29:36+00:00",
-  "git_commit": "605145bdc2594da86fa5c2613b5220f6947c718c",
+  "date_utc": "2026-10-04T18:11:14+00:00",
+  "git_commit": "8b1d433f937bcb2d46e9ebc06943227c0ada77b7",
   "git_dirty": true,
   "cavitylab_version": "0.1.0.dev0",
   "python": "3.13.9",
@@ -35,5 +35,5 @@
     "courant": 0.5,
     "periods_measured": 20
   },
-  "wall_time_s": 5.23
+  "wall_time_s": 4.84
 }

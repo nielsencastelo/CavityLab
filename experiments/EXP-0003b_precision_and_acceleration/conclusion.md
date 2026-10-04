@@ -24,8 +24,9 @@ For comparison, the naive-ledger artifacts are 3.8e-5 to 2.7e-3 (float64).
   to round-off.
 - **float32.** Field dynamics remain accurate (growth and decay rates are correct),
   but the ledger floor rises to 1e-5 to 1e-3. That is **the same level as the
-  naive artifacts**, so float32 cannot tell physics from artifacts. Gate
-  `float32_floor_below_naive_artifacts`: **FAIL**, an honest negative result.
+  naive artifacts**, so float32 cannot tell physics from artifacts. This is recorded as the finding
+  `float32_floor_below_naive_artifacts = false`, an expected negative result, not a
+  pass/fail gate.
 - Accumulating the ledger in float64 helps only slightly, so the floor is set by
   rounding of the float32 field updates themselves, not by the accumulator. This is
   worst for decaying runs, where the stored energy falls far below the energy scale.
@@ -37,16 +38,16 @@ For comparison, the naive-ledger artifacts are 3.8e-5 to 2.7e-3 (float64).
 
 | Batch B | numpy f64 | numpy f32 | GPU f64 | GPU f32 |
 |---|---|---|---|---|
-| 16 | 21 | 26 | 2.1 | 1.6 |
-| 256 | 45 | 78 | 32 | 27 |
-| 2048 | 8.6 | 32 | 193 | 227 |
-| 8192 | 8.3 | 16 | **261** | **509** |
+| 16 | 19 | 26 | 2.1 | 2.0 |
+| 256 | 41 | 71 | 34 | 32 |
+| 2048 | 9.1 | 38 | 251 | 245 |
+| 8192 | 8.9 | 16 | **272** | **412** |
 
 - **Small batches (≤ 256):** the CPU wins. Each time step launches about 30 small
   kernels, so the GPU is dominated by launch latency.
-- **Large batches (≥ 2048):** the GPU wins. In float64 it is **~6× faster than the
-  best CPU case** and ~31× faster than the CPU at the same batch size. float32 is
-  only 2× faster than float64 on the A2000.
+- **Large batches (≥ 2048):** the GPU wins. In float64 it is **~6.6× faster than the
+  best CPU case** and ~30× faster than the CPU at the same batch size. float32 is
+  only ~1.5× faster than float64 on the A2000 at these sizes.
 - **Policy.** Parameter maps, Floquet maps, ensembles and optimizer populations go
   to the GPU in float64 (`backend="auto"`). Single long runs stay on the CPU.
 

@@ -44,3 +44,7 @@ L042,Sarkar,2022,FDTD analysis of guided EM wave interaction with time-modulated
 L043,Stewart; Smy; Gupta,2016,FDTD modelling of space-time modulated metasurfaces,arXiv,1612.02087,time_varying_fdtd,none_reported,"FDTD eps(x,t)",RQ2,prior_art,yes
 L044,Oskooi et al.,2010,Meep: a flexible free-software package for electromagnetic simulations by the FDTD method,"Comput. Phys. Commun. 181, 687",10.1016/j.cpc.2009.11.008,tools,partial,Independent solver candidate,RQ2;RQ5,prior_art,yes
 L045,Lehman et al.,2018,The surprising creativity of digital evolution,arXiv,1803.03453,optimizer_artifacts,n/a,Optimizers exploit simulator bugs,RQ5,prior_art,yes
+L046,Figotin,2026,Floquet theory of the LC circuit with modulated capacitance,arXiv (math-ph),2606.02893,parametric_theory,n/a,Even resonances exactly stable for 1/(1+eps cos) (Ince); odd tongues open with closed-form widths,RQ1,lit_check_nu1_tongue,yes
+L047,Cambi,1948,Trigonometric components of a frequency-modulated wave,"Proc. IRE 36(1), 42-49",IEEE Xplore 1697500,parametric_theory,n/a,Exact solution of the FM (Ince) equation; instability only at odd subharmonics,RQ1,lit_check_nu1_tongue,no
+L048,Magnus; Winkler,1966,Hill's Equation,Wiley (Dover 1979),,parametric_theory,n/a,Coexistence theory for Ince's equation,RQ1,lit_check_nu1_tongue,no
+L049,Martinez-Romero; Becerra-Fuentes; Halevi,2016,Temporal photonic crystals with modulations of both permittivity and permeability,"Phys. Rev. A 93, 063813",10.1103/PhysRevA.93.063813,time_varying,n/a,First k-gap ~ |m_eps - m_mu|,RQ1,lit_check_nu1_tongue,yes

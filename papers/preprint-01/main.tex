@@ -230,14 +230,32 @@ With $Q=200$:
 \paragraph{Resonance maps (EXP-0005).} Over the $(\nu=\Omega/\omega_1,\delta)$ plane:
 \begin{itemize}
 \item stability classification from the FDTD monodromy agrees with theory at
-  \TODO{100\%} of points;
-\item the exact ledger closes to \TODO{$<2\times10^{-13}$} everywhere;
-\item the naive ledger reports apparent gain at \TODO{92\%} of points, up to
-  \TODO{26\%} of the energy scale;
+  100\% of points (688 points at $Q=100$ and 2210 at $Q=2000$), with a median
+  exponent error of $6\times10^{-10}$ per $\omega_1t$;
+\item the exact ledger closes to $1.5\times10^{-13}$ or better everywhere;
+\item the naive ledger reports apparent gain at 92\% of points, up to 13.7\% of the
+  energy scale ($N=128$);
 \item at the worst point that gain halves with every doubling of resolution
-  (order \TODO{1.02}).
+  (order 0.97).
 \end{itemize}
 The left-point pump-work rule is therefore positively biased.
+
+\paragraph{An exact coexistence test.} For sinusoidal $\varepsilon(t)$ the mode
+equation $\ddot d+\omega_0^2d/(1+\delta\sin\Omega t)=0$ is not of Mathieu form.
+Multiplied by $f$ it becomes Ince's (frequency-modulation) equation, for which every
+even instability interval $\Omega\simeq\omega_0/k$ has exactly zero width while the
+odd intervals $\Omega\simeq2\omega_0/(2k-1)$ remain open~\cite{Cambi1948,Figotin2026}.
+The FDTD monodromy reproduces this:
+\begin{itemize}
+\item at $\nu\in[0.9,1.2]$, $\delta=0.5$ (lossless), the largest exponent is
+  $3.7\times10^{-7}$, at the discretization level, versus $-6\times10^{-10}$ from
+  theory;
+\item the narrow third tongue is found at the correct position, $\nu=0.678$
+  ($\mu=1.9\times10^{-5}$ vs.\ $2.9\times10^{-5}$ at $\delta=0.3$, $N=128$).
+\end{itemize}
+A sinusoidal \emph{impermittivity} would instead give the Mathieu equation, with all
+tongues open. The distinction matters when interpreting momentum gaps in photonic
+time crystals.
 
 %=====================================================================
 \section{Multimode cases}

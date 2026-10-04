@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-0003b",
-  "date_utc": "2026-10-04T17:35:58+00:00",
-  "git_commit": "a964e297b1f472dc980a2492892aada8481fc54b",
+  "date_utc": "2026-10-04T18:10:21+00:00",
+  "git_commit": "8b1d433f937bcb2d46e9ebc06943227c0ada77b7",
   "git_dirty": true,
   "cavitylab_version": "0.1.0.dev0",
   "python": "3.13.9",
@@ -34,5 +34,5 @@
     "throughput_n_cells": 128,
     "throughput_steps": 2000
   },
-  "wall_time_s": 1215.95
+  "wall_time_s": 1102.09
 }

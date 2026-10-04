@@ -10,9 +10,21 @@ change code or hypotheses. The Portuguese originals are in
 - Python environment: `C:/Users/niels/anaconda3/python.exe` (3.13) with numpy,
   scipy, matplotlib and pytest. The package is installed editable with
   `pip install -e .`.
+- GPU environment: `.venv-gpu/Scripts/python.exe` (torch 2.14 + CUDA 12.6 for the RTX
+  A2000 12 GB). Use it for batched sweeps (`FDTD1DBatch(..., xp="torch")` or
+  `backend="auto"`). Do not import torch inside Anaconda (OpenMP clash). CuPy is
+  blocked by Windows application control.
+- Prefer the batched solver and the GPU for any sweep with ≥ 1000 simulations.
+  Audit-grade results must be float64.
 - Run the tests with `python -m pytest`.
 - Run an experiment with `python experiments/EXP-XXXX_*/run.py`. It writes
   `results/manifest.json`, `results/metrics.json` and `figures/`.
+
+## Git
+
+- The owner makes every commit and push. Do not run `git commit` or `git push`.
+  Prepare the changes and suggest a commit message.
+- Never add "Co-Authored-By" or any AI attribution to commits or PRs.
 
 ## Scientific rules (non-negotiable)
 
