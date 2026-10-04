@@ -1,34 +1,56 @@
 {
   "experiment_id": "EXP-0005",
-  "date_utc": "2026-10-04T13:12:40+00:00",
-  "git_commit": "d0b905c968d393389c56da45440812897fa0fbf2",
+  "date_utc": "2026-10-04T17:42:40+00:00",
+  "git_commit": "1edf8bcc6cd84bc3f7ddba8c1c9014c31891bbe7",
   "git_dirty": true,
   "cavitylab_version": "0.1.0.dev0",
   "python": "3.13.9",
-  "numpy": "2.3.5",
-  "scipy": "1.16.3",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
   "platform": "Windows-11-10.0.26200-SP0",
   "processor": "Intel64 Family 6 Model 143 Stepping 8, GenuineIntel",
   "precision": "float64",
-  "config_hash": "cb3cebf9da8fa4b0",
+  "config_hash": "15cb98a3f97a9d04",
   "config": {
     "length_m": 0.1,
     "courant": 0.5,
-    "n_cells": 64,
-    "quality": 100.0,
-    "nu_grid": [
-      0.5,
-      2.6,
-      43
-    ],
-    "delta_grid": [
-      0.0,
-      0.3,
-      16
-    ],
+    "n_cells": 128,
+    "map_A": {
+      "quality": 100.0,
+      "nu_grid": [
+        0.5,
+        2.6,
+        43
+      ],
+      "delta_grid": [
+        0.0,
+        0.3,
+        16
+      ]
+    },
+    "map_B": {
+      "quality": 2000.0,
+      "nu_grid": [
+        0.5,
+        2.6,
+        85
+      ],
+      "delta_grid": [
+        0.0,
+        0.5,
+        26
+      ]
+    },
     "floquet_pump_periods": 40,
     "ledger_run_mode_periods": 30,
-    "pump_phase_rad": 0.7853981633974483
+    "pump_phase_rad": 0.7853981633974483,
+    "refinement_n_cells": [
+      64,
+      128,
+      256,
+      512
+    ],
+    "backend": "torch"
   },
-  "wall_time_s": 659.02
+  "wall_time_s": 387.43
 }
