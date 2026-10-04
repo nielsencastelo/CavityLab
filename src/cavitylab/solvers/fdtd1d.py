@@ -81,7 +81,8 @@ class FDTDResult:
     naive_loss: np.ndarray
     naive_port: np.ndarray
     naive_source: np.ndarray
-    modes: dict[int, np.ndarray] = field(default_factory=dict)  # E projections a_m(t)
+    modes: dict[int, np.ndarray] = field(default_factory=dict)  # E projections a_m(t) on sin(m pi x/L)
+    modes_h: dict[int, np.ndarray] = field(default_factory=dict)  # time-averaged H projections on cos
     meta: dict = field(default_factory=dict)
 
 
@@ -176,7 +177,12 @@ class FDTD1D:
         basis = {
             m: (2.0 / lc) * dx * np.sin(m * math.pi * self.x_e / lc) * in_cav for m in modes
         }
+        in_cav_h = self.x_h <= lc
+        basis_h = {
+            m: (2.0 / lc) * dx * np.cos(m * math.pi * self.x_h / lc) * in_cav_h for m in modes
+        }
         mode_rec = {m: np.zeros(n_rec) for m in modes}
+        mode_h_rec = {m: np.zeros(n_rec) for m in modes}
 
         src_nodes = np.array([s.node for s in self.sources], int)
         E, D, H = self.E, self.D, self.H
@@ -197,6 +203,7 @@ class FDTD1D:
                 cum_naive_rec[r] = cum_naive
                 for m, b in basis.items():
                     mode_rec[m][r] = np.dot(b, E)
+                    mode_h_rec[m][r] = np.dot(basis_h[m], h_avg)
                 r += 1
             if step == n_steps:
                 break  # keep H at n-1/2 so that the state stays consistent
@@ -259,6 +266,7 @@ class FDTD1D:
             naive_port=cum_naive_rec[:, 2],
             naive_source=cum_naive_rec[:, 3],
             modes=mode_rec,
+            modes_h=mode_h_rec,
             meta={
                 "solver": "cavitylab.native_fdtd1d",
                 "dx": dx,

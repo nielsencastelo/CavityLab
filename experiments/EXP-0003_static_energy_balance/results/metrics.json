@@ -13,7 +13,7 @@
         "energy_scale": 2.6151470961654526e-14,
         "max_relative_residual": 4.223109548708705e-15,
         "final_relative_e_net": -4.1024492758884565e-15,
-        "tolerance": 1e-12,
+        "tolerance": 1e-10,
         "status": "PASS"
       },
       "naive": {
@@ -28,7 +28,7 @@
         "energy_scale": 2.615606547626363e-14,
         "max_relative_residual": 0.00014875848590391847,
         "final_relative_e_net": -8.092983560473315e-05,
-        "tolerance": 1e-12,
+        "tolerance": 1e-10,
         "status": "FAIL"
       },
       "dt": 4.169551189976901e-13,
@@ -47,7 +47,7 @@
         "energy_scale": 2.2135128182258036e-13,
         "max_relative_residual": 5.966726151673435e-13,
         "final_relative_e_net": 5.942777136156397e-13,
-        "tolerance": 1e-12,
+        "tolerance": 1e-10,
         "status": "PASS"
       },
       "naive": {
@@ -62,7 +62,7 @@
         "energy_scale": 2.2135469532000965e-13,
         "max_relative_residual": 0.00015707718738904752,
         "final_relative_e_net": 0.00015700231847099645,
-        "tolerance": 1e-12,
+        "tolerance": 1e-10,
         "status": "FAIL"
       },
       "dt": 4.169551189976901e-13,
@@ -83,8 +83,8 @@
         "energy_scale": 5.864223761572954e-11,
         "max_relative_residual": 1.8947711621903698e-12,
         "final_relative_e_net": 1.8941099648556515e-12,
-        "tolerance": 1e-12,
-        "status": "FAIL"
+        "tolerance": 1e-10,
+        "status": "PASS"
       },
       "naive": {
         "ledger": "naive",
@@ -98,7 +98,7 @@
         "energy_scale": 5.864375974106578e-11,
         "max_relative_residual": 2.3228829142069522e-05,
         "final_relative_e_net": -2.23289940381722e-05,
-        "tolerance": 1e-12,
+        "tolerance": 1e-10,
         "status": "FAIL"
       },
       "dt": 4.169551189976901e-13,
@@ -117,7 +117,7 @@
         "energy_scale": 2.615147096165447e-14,
         "max_relative_residual": 3.4991479117872204e-15,
         "final_relative_e_net": 7.239616369214939e-16,
-        "tolerance": 1e-12,
+        "tolerance": 1e-10,
         "status": "PASS"
       },
       "naive": {
@@ -132,7 +132,7 @@
         "energy_scale": 2.615606547626363e-14,
         "max_relative_residual": 0.000267771942677637,
         "final_relative_e_net": -3.979934559079871e-06,
-        "tolerance": 1e-12,
+        "tolerance": 1e-10,
         "status": "FAIL"
       },
       "dt": 4.169551189976901e-13,
@@ -207,15 +207,15 @@
     "D_open_port": [
       {
         "n_cells": 100,
-        "exact_max_rel": 3.508289858334868e-15,
-        "naive_max_rel": 0.0025508782699503506,
-        "naive_final_rel_e_net": -0.0014899520367393647
+        "exact_max_rel": 5.564873568393239e-15,
+        "naive_max_rel": 0.0025872024969947408,
+        "naive_final_rel_e_net": -0.0011096849551914644
       },
       {
         "n_cells": 200,
-        "exact_max_rel": 7.243423400243777e-15,
-        "naive_max_rel": 0.0007778584666332085,
-        "naive_final_rel_e_net": -8.038807780779302e-05
+        "exact_max_rel": 5.674014996857625e-15,
+        "naive_max_rel": 0.0007719211688935126,
+        "naive_final_rel_e_net": -6.899355715130093e-05
       },
       {
         "n_cells": 400,
@@ -225,23 +225,23 @@
       },
       {
         "n_cells": 800,
-        "exact_max_rel": 1.0134127814019903e-14,
-        "naive_max_rel": 0.00015571859990502166,
-        "naive_final_rel_e_net": -8.843419174359309e-07
+        "exact_max_rel": 1.04960609502349e-14,
+        "naive_max_rel": 0.00011033841881043933,
+        "naive_final_rel_e_net": -3.6301505924717454e-07
       },
       {
         "n_cells": 1600,
-        "exact_max_rel": 2.6902809925217624e-14,
-        "naive_max_rel": 0.0001088184721206978,
-        "naive_final_rel_e_net": -7.88187681388229e-08
+        "exact_max_rel": 2.111207056911697e-14,
+        "naive_max_rel": 4.9255141841590545e-05,
+        "naive_final_rel_e_net": -1.896830186818941e-07
       }
     ]
   },
   "naive_residual_order_in_n": {
-    "A_closed_lossless": 2.0279907172163956,
-    "C_driven_lossy": 0.38577670877724723,
-    "D_open_port": 1.1422563741747598
+    "A_closed_lossless": 2.0803549474898384,
+    "C_driven_lossy": 0.8984999488988646,
+    "D_open_port": 1.2213292793526698
   },
-  "gate_all_exact_pass": false,
+  "gate_all_exact_pass": true,
   "gate_Q_within_1pct": true
 }

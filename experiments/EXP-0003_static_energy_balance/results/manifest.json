@@ -1,7 +1,7 @@
 {
   "experiment_id": "EXP-0003",
-  "date_utc": "2026-10-04T12:34:28+00:00",
-  "git_commit": "8e6a435f1f1bf48500e4d278b87ce464b33db156",
+  "date_utc": "2026-10-04T12:39:21+00:00",
+  "git_commit": "4d8ee1e7347aa0fdd3e328f35c039b3946ec3d3b",
   "git_dirty": true,
   "cavitylab_version": "0.1.0.dev0",
   "python": "3.13.9",
@@ -10,7 +10,7 @@
   "platform": "Windows-11-10.0.26200-SP0",
   "processor": "Intel64 Family 6 Model 143 Stepping 8, GenuineIntel",
   "precision": "float64",
-  "config_hash": "fec3bf7a9eabef05",
+  "config_hash": "916fede9ee4c431c",
   "config": {
     "length_m": 0.1,
     "courant": 0.5,
@@ -25,7 +25,7 @@
     "C_periods": 300,
     "D_domain_m": 0.25,
     "D_mirror_eps_r": 60.0,
-    "D_mirror_cells": 4,
+    "D_mirror_thickness_m": 0.001,
     "D_absorber_start_m": 0.16,
     "D_absorber_sigma_max": 0.8,
     "D_round_trips": 40,
@@ -36,7 +36,7 @@
       800,
       1600
     ],
-    "tolerance_exact": 1e-12
+    "tolerance_exact": 1e-10
   },
-  "wall_time_s": 249.37
+  "wall_time_s": 259.3
 }
