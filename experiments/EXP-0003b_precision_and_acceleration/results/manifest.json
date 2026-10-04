@@ -1,0 +1,38 @@
+{
+  "experiment_id": "EXP-0003b",
+  "date_utc": "2026-10-04T17:35:58+00:00",
+  "git_commit": "a964e297b1f472dc980a2492892aada8481fc54b",
+  "git_dirty": true,
+  "cavitylab_version": "0.1.0.dev0",
+  "python": "3.13.9",
+  "numpy": "2.5.3",
+  "scipy": "1.18.1",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 143 Stepping 8, GenuineIntel",
+  "precision": "float64",
+  "config_hash": "ddbc4b4807a6a63b",
+  "config": {
+    "length_m": 0.1,
+    "courant": 0.5,
+    "n_cells": 200,
+    "quality": 200.0,
+    "deltas": [
+      0.0,
+      0.005,
+      0.02,
+      0.04
+    ],
+    "nu": 2.0,
+    "mode_periods": 400,
+    "record_points": 400,
+    "throughput_batches": [
+      16,
+      256,
+      2048,
+      8192
+    ],
+    "throughput_n_cells": 128,
+    "throughput_steps": 2000
+  },
+  "wall_time_s": 1215.95
+}
