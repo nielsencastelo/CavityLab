@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use CavityLab, please cite it as below."
+title: "CavityLab: reproducible, energy-audited simulation of electromagnetic and quantum cavities"
+type: software
+authors:
+  - family-names: "Dantas"
+    given-names: "Nielsen Castelo Damasceno"
+version: "0.1.0.dev0"
+date-released: "2026-10-04"
+license: MIT
+repository-code: "https://github.com/nielsencastelo/CavityLab"
+keywords:
+  - FDTD
+  - energy conservation
+  - time-varying media
+  - parametric resonance
+  - dynamical Casimir effect
+  - reproducibility

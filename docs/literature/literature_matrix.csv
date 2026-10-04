@@ -1,0 +1,46 @@
+id,authors,year,title,venue,doi_or_arxiv,cluster,energy_accounting,relevance,rq,source,verified
+L001,Bordag; Mohideen; Mostepanenko,2001,New developments in the Casimir effect,Phys. Rep. 353,10.1016/S0370-1573(01)00015-1,casimir,n/a,Broad Casimir review,RQ7,review_v2,no
+L002,Jaffe,2005,Casimir effect and the quantum vacuum,"Phys. Rev. D 72, 021301",10.1103/PhysRevD.72.021301,zpe,n/a,Casimir without absolute vacuum energy,RQ7,review_v2,no
+L003,Forward,1984,Extracting electrical energy from the vacuum by cohesion of charged foliated conductors,"Phys. Rev. B 30, 1700",10.1103/PhysRevB.30.1700,zpe_extraction,partial,Vacuum-fluctuation battery; cycle needs re-expansion,RQ7,review_v2,no
+L004,Cole; Puthoff,1993,Extracting energy and heat from the vacuum,"Phys. Rev. E 48, 1562",10.1103/PhysRevE.48.1562,zpe_extraction,partial,Thermodynamic analysis of proposals,RQ7,review_v2,no
+L005,Moddel,2019,Extraction of zero-point energy from the vacuum: assessment of SED-based approach,"Atoms 7, 51",10.3390/atoms7020051,zpe_extraction,n/a,No proposal reliably demonstrated,RQ7,review_v2,no
+L006,Maclay,2000,Analysis of zero-point electromagnetic energy and Casimir forces in conducting rectangular cavities,"Phys. Rev. A 61, 052110",10.1103/PhysRevA.61.052110,casimir_geometry,explicit,Energy balance when cavity dimensions vary,RQ4;RQ7,review_v2,no
+L007,Wilson et al.,2011,Observation of the dynamical Casimir effect in a superconducting circuit,"Nature 479, 376",10.1038/nature10561,dce,partial,DCE experiment; effective-length modulation,RQ1,review_v2+prior_art,yes
+L008,Dodonov,2025,Dynamical Casimir effect: 55 years later,"Physics 7, 10",10.3390/physics7020010,dce,n/a,DCE review 2020-2024,RQ1,review_v2,no
+L009,Dodonov,2020,Fifty years of the dynamical Casimir effect,"Physics 2, 67",10.3390/physics2010007,dce,n/a,DCE review,RQ1,prior_art,yes
+L010,Dodonov,2010,Current status of the dynamical Casimir effect,"Phys. Scr. 82, 038105",10.1088/0031-8949/82/03/038105,dce,n/a,DCE review,RQ1,prior_art,yes
+L011,Crocce; Dalvit; Mazzitelli,2001,Resonant photon creation in a three-dimensional oscillating cavity,"Phys. Rev. A 64, 013808",10.1103/PhysRevA.64.013808,dce,n/a,Parametric resonance conditions,RQ1,prior_art,yes
+L012,Ruser,2006,Numerical approach to the dynamical Casimir effect,"J. Phys. A 39, 6711",10.1088/0305-4470/39/21/S72,dce_numerical,n/a,Numerical DCE with moving walls,RQ1;RQ2,prior_art,yes
+L013,Faccio; Carusotto,2011,Dynamical Casimir effect in optically modulated cavities,"EPL 96, 24006",10.1209/0295-5075/96/24006,dce_numerical,n/a,Classical real-time Maxwell analogue of DCE,RQ1;RQ2,prior_art,yes
+L014,Dalvit; Maia Neto; Mazzitelli,2011,"Fluctuations, dissipation and the dynamical Casimir effect",Lect. Notes Phys. 834,10.1007/978-3-642-20288-9_13,dce,n/a,Review incl. analog setups,RQ1,prior_art,yes
+L015,Antunes,2003,Numerical simulation of vacuum particle production with time-dependent non-homogeneous dielectrics,arXiv,hep-ph/0310131,dce_numerical,n/a,"Lattice DCE with eps(x,t)",RQ1,prior_art,yes
+L016,Janaki; Dasgupta,1990,Eigenmodes of a toroidal cavity,"IEEE Trans. Plasma Sci. 18(1), 78-85",,toroid,n/a,Toroidal cavity eigenmodes,RQ4,review_v2,no
+L017,Giraldez,2013,Ressonancia eletromagnetica em cavidades toroidais - teoria e experiencia,"Thesis, USP",https://teses.usp.br/teses/disponiveis/43/43131/tde-04122013-183817/,toroid,n/a,Measured toroidal copper cavity eigenfrequencies and Q,RQ4,review_v2,no
+L018,Armani et al.,2003,Ultra-high-Q toroid microcavity on a chip,"Nature 421, 925",10.1038/nature01371,toroid_photonics,n/a,Q > 1e8 microtoroid,RQ4,review_v2,no
+L019,Spillane et al.,2005,Ultrahigh-Q toroidal microresonators for cavity quantum electrodynamics,"Phys. Rev. A 71, 013817",10.1103/PhysRevA.71.013817,toroid_photonics,n/a,Cavity QED in microtoroids,RQ4,review_v2,no
+L020,Tasolamprou et al.,2016,Toroidal eigenmodes in all-dielectric metamolecules,"Phys. Rev. B 94, 205433",10.1103/PhysRevB.94.205433,toroid_metamaterial,n/a,Toroidal dipole modes,RQ4,review_v2,no
+L021,Kirsten; Elizalde,1995,Casimir energy of a massive field in a genus-1 surface,Phys. Lett. B,10.1016/0370-2693(95)01303-2,casimir_topology,n/a,Torus as compactified topology (not a physical cavity),RQ4,review_v2,no
+L022,Schmeing; Pioch,2026,Advancements in PINNs for solving Maxwell equations: a systematic literature review,"Electronics 15, 2424",10.3390/electronics15112424,sciml,partial,139 studies; benchmark/reproducibility gaps,RQ2;RQ3,review_v2,no
+L023,Leon; Scheinker,2024,Physics-constrained machine learning for electrodynamics without gauge ambiguity,"Sci. Rep. 14, 14809",10.1038/s41598-024-65650-9,sciml,partial,Fourier-Helmholtz-Maxwell neural operator,RQ2;RQ6,review_v2,no
+L024,(review),2026,Physics-informed neural networks for differential equation solutions: a comprehensive review,"Neurocomputing 680, 133317",10.1016/j.neucom.2026.133317,sciml,n/a,"Spectral bias, constraints, benchmarking",RQ2;RQ3,review_v2,no
+L025,Schul et al.,2026,Inverse design for scalable photonic systems,"Nat. Rev. Mater. 11, 621",10.1038/s41578-026-00915-5,inverse_design,n/a,Adjoint/topology optimization review,RQ5,review_v2,no
+L026,Ueno; Hu; An,2024,AI for optical metasurface,"npj Nanophotonics 1, 36",10.1038/s44310-024-00037-2,inverse_design,n/a,ML for metasurfaces,RQ5,review_v2,no
+L027,Hokkyo; Ueda,2025,Universal upper bound on ergotropy and no-go theorem by the eigenstate thermalization hypothesis,"Phys. Rev. Lett. 134, 010406",10.1103/PhysRevLett.134.010406,quantum_thermo,explicit,Ergotropy bound,RQ8,review_v2,no
+L028,Safranek; Rosa; Binder,2023,Work extraction from unknown quantum sources,"Phys. Rev. Lett. 130, 210401",10.1103/PhysRevLett.130.210401,quantum_thermo,explicit,Work extraction,RQ8,review_v2,no
+L029,Francica et al.,2020,Quantum coherence and ergotropy,"Phys. Rev. Lett. 125, 180603",10.1103/PhysRevLett.125.180603,quantum_thermo,explicit,Coherent vs incoherent ergotropy,RQ8,review_v2,no
+L030,Kamin; Salimi; Santos,2021,Exergy of passive states: waste energy after ergotropy extraction,"Phys. Rev. E 104, 034134",10.1103/PhysRevE.104.034134,quantum_thermo,explicit,Passive-state exergy,RQ8,review_v2,no
+L031,(authors tbd),2017,Amplification of the parametric dynamical Casimir effect via optimal control,"Phys. Rev. A 96, 033851",10.1103/PhysRevA.96.033851,dce_control,partial,Optimal control of DCE,RQ5;RQ8,review_v2,no
+L032,(authors tbd),2025,Superconducting quantum circuit to simulate the dynamical Casimir effect in a double cavity,"Phys. Rev. A 111, 013714",10.1103/PhysRevA.111.013714,dce,n/a,Circuit DCE simulation,RQ1,review_v2,no
+L033,Toth et al.,2017,A dissipative quantum reservoir for microwave light using a mechanical oscillator,"Nat. Phys. 13, 787",,reservoir_engineering,n/a,Reservoir engineering,RQ8,review_v2,no
+L034,Joly,2003,Variational methods for time-dependent wave propagation problems,Springer LNCSE,10.1007/978-3-642-55483-4_6,fdtd_energy,discrete-exact,Yee leapfrog energy method,RQ2,prior_art,yes
+L035,Chen; Li; Liang,2008,Energy-conserved splitting FDTD methods for Maxwell equations,"Numer. Math. 108, 445",10.1007/s00211-007-0123-9,fdtd_energy,discrete-exact,Discrete energy identities,RQ2,prior_art,yes
+L036,Bekmambetova; Zhang; Triverio,2016,A dissipative systems theory for FDTD,arXiv,1606.08761,fdtd_energy,discrete-exact,Storage energy/dissipation inequality,RQ2,prior_art,yes
+L037,Galiffi et al.,2022,Photonics of time-varying media,"Adv. Photonics 4, 014002",10.1117/1.AP.4.1.014002,time_varying,n/a,Main review,RQ1;RQ2,prior_art,yes
+L038,Galiffi; Solis; Yin; Engheta; Alu,2025,Electrodynamics of photonic temporal interfaces,Light Sci. Appl.,10.1038/s41377-025-01947-2,time_varying,explicit,Energy at temporal interfaces (analytic),RQ2,prior_art,yes
+L039,Mirmoosa; Ptitcyn; Asadchy; Tretyakov,2019,Time-varying reactive elements for extreme accumulation of electromagnetic energy,"Phys. Rev. Applied 11, 014024",10.1103/PhysRevApplied.11.014024,time_varying,explicit,Pump-work accounting (lumped),RQ2;RQ7,prior_art,yes
+L040,Hayran; Khurgin; Monticone,2022,hbar omega versus hbar k: dispersion and energy constraints on time-varying photonic materials,"Opt. Mater. Express 12, 3904",10.1364/OME.471672,time_varying,explicit,Energy constraints,RQ7,prior_art,yes
+L041,Taravati; Kishk; Eleftheriades,2024,FDTD simulation of wave transmission through space-time-varying media,arXiv,2409.19923,time_varying_fdtd,none_reported,"General eps,mu,sigma(x,t) FDTD",RQ2,prior_art,yes
+L042,Sarkar,2022,FDTD analysis of guided EM wave interaction with time-modulated dielectric medium,SpringerBriefs,10.1007/978-981-19-1630-4,time_varying_fdtd,unknown,"1D FDTD with eps(t), code",RQ2,prior_art,yes
+L043,Stewart; Smy; Gupta,2016,FDTD modelling of space-time modulated metasurfaces,arXiv,1612.02087,time_varying_fdtd,none_reported,"FDTD eps(x,t)",RQ2,prior_art,yes
+L044,Oskooi et al.,2010,Meep: a flexible free-software package for electromagnetic simulations by the FDTD method,"Comput. Phys. Commun. 181, 687",10.1016/j.cpc.2009.11.008,tools,partial,Independent solver candidate,RQ2;RQ5,prior_art,yes
+L045,Lehman et al.,2018,The surprising creativity of digital evolution,arXiv,1803.03453,optimizer_artifacts,n/a,Optimizers exploit simulator bugs,RQ5,prior_art,yes

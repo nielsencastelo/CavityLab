@@ -1,0 +1,151 @@
+{
+  "lossless": {
+    "photons_final": 100.45210925435613,
+    "rwa_sinh2_final": 100.40240332958625,
+    "rel_diff_vs_rwa": 0.0004950670812799984,
+    "entropy_max": 8.361693127921644e-05,
+    "ergotropy_over_photons_final": 0.9999999763399968,
+    "ledger_residual_max": 2.4389237296418287e-09,
+    "pump_work_final": 100.45210925191721
+  },
+  "classical_fdtd_bridge": [
+    {
+      "n_cells": 50,
+      "tau": 628.3169479972943,
+      "photons_fdtd_map": 133.51113859492625,
+      "photons_quantum": 133.4408217784391,
+      "rel_err": 0.0005269513148224991,
+      "det_M": 1.0000000000000027
+    },
+    {
+      "n_cells": 100,
+      "tau": 628.3169479972943,
+      "photons_fdtd_map": 133.4916537378711,
+      "photons_quantum": 133.4408217784391,
+      "rel_err": 0.00038093260184202116,
+      "det_M": 1.0000000000000009
+    },
+    {
+      "n_cells": 200,
+      "tau": 628.3169479972943,
+      "photons_fdtd_map": 133.45560623039853,
+      "photons_quantum": 133.4408217784391,
+      "rel_err": 0.00011079407157721377,
+      "det_M": 1.0000000000000022
+    },
+    {
+      "n_cells": 400,
+      "tau": 628.3169479972943,
+      "photons_fdtd_map": 133.4446476923643,
+      "photons_quantum": 133.4408217784391,
+      "rel_err": 2.8671240735800296e-05,
+      "det_M": 1.0000000000000027
+    }
+  ],
+  "bridge_convergence_order": 1.8659297610704966,
+  "lossy_work_audit": [
+    {
+      "Q": 400.0,
+      "n_th": 0.0,
+      "delta_over_threshold": 4.0,
+      "photons_final": 1100638.941329536,
+      "photons_initial": 0.0,
+      "ergotropy_final": 1100170.0036916633,
+      "passive_energy_final": 468.93763787283507,
+      "entropy_final": 7.151535274069374,
+      "pump_work": 1467487.5640119347,
+      "energy_to_bath": 366848.62271828804,
+      "delta_energy": 1100638.941329536,
+      "ergotropy_over_pump_work": 0.7496963045355769,
+      "ledger_residual_max_rel": 2.4890104549958678e-11,
+      "kappa_per_tau": 0.0025
+    },
+    {
+      "Q": 200.0,
+      "n_th": 0.0,
+      "delta_over_threshold": 2.0,
+      "photons_final": 11090.367104518993,
+      "photons_initial": 0.0,
+      "ergotropy_final": 11030.06664153945,
+      "passive_energy_final": 60.3004629795438,
+      "entropy_final": 5.107586132184224,
+      "pump_work": 22173.019000894583,
+      "energy_to_bath": 11082.651896918294,
+      "delta_energy": 11090.367104518993,
+      "ergotropy_over_pump_work": 0.49745443509945286,
+      "ledger_residual_max_rel": 2.4464941829833156e-11,
+      "kappa_per_tau": 0.005
+    },
+    {
+      "Q": 100.0,
+      "n_th": 0.0,
+      "delta_over_threshold": 1.0,
+      "photons_final": 4.882091352615919,
+      "photons_initial": 0.0,
+      "ergotropy_final": 3.7608682993673073,
+      "passive_energy_final": 1.1212230532486114,
+      "entropy_final": 1.4668540805154748,
+      "pump_work": 52.53371811190622,
+      "energy_to_bath": 47.65162676049494,
+      "delta_energy": 4.8820913526159195,
+      "ergotropy_over_pump_work": 0.07158960824657384,
+      "ledger_residual_max_rel": 2.2938441088024343e-11,
+      "kappa_per_tau": 0.01
+    },
+    {
+      "Q": 400.0,
+      "n_th": 1.0,
+      "delta_over_threshold": 4.0,
+      "photons_final": 3301917.8239871026,
+      "photons_initial": 1.0,
+      "ergotropy_final": 3300510.0110707833,
+      "passive_energy_final": 1407.8129163193785,
+      "entropy_final": 8.250147732722326,
+      "pump_work": 4402462.692033776,
+      "energy_to_bath": 1100545.8681543728,
+      "delta_energy": 3301916.8239871026,
+      "ergotropy_over_pump_work": 0.7496963045349667,
+      "ledger_residual_max_rel": 2.4894068371617992e-11,
+      "kappa_per_tau": 0.0025
+    },
+    {
+      "Q": 200.0,
+      "n_th": 1.0,
+      "delta_over_threshold": 2.0,
+      "photons_final": 33272.10131334299,
+      "photons_initial": 1.0,
+      "ergotropy_final": 33090.19992737654,
+      "passive_energy_final": 181.9013859664496,
+      "entropy_final": 6.2062084237393265,
+      "pump_work": 66519.05700225879,
+      "energy_to_bath": 33247.955690541356,
+      "delta_energy": 33271.10131334299,
+      "ergotropy_over_pump_work": 0.49745443514409554,
+      "ledger_residual_max_rel": 2.4724907376347477e-11,
+      "kappa_per_tau": 0.005
+    },
+    {
+      "Q": 100.0,
+      "n_th": 1.0,
+      "delta_over_threshold": 1.0,
+      "photons_final": 15.646274057880326,
+      "photons_initial": 1.0,
+      "ergotropy_final": 11.282604898124657,
+      "passive_energy_final": 4.36366915975567,
+      "entropy_final": 2.5800261002909872,
+      "pump_work": 157.60115433610267,
+      "energy_to_bath": 142.95488028184312,
+      "delta_energy": 14.646274057880326,
+      "ergotropy_over_pump_work": 0.07158960824654366,
+      "ledger_residual_max_rel": 2.3014709000611555e-11,
+      "kappa_per_tau": 0.01
+    }
+  ],
+  "gates": {
+    "rwa_agreement_1pct": true,
+    "pure_state_lossless": true,
+    "ledger_closes": true,
+    "bridge_second_order": true,
+    "ergotropy_never_exceeds_pump_work": true
+  }
+}

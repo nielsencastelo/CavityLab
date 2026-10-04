@@ -1,0 +1,43 @@
+{
+  "max_abs_floquet_error_per_tau": 0.0008270200954732018,
+  "median_abs_floquet_error_per_tau": 1.3733504077885483e-09,
+  "stability_classification_agreement": 1.0,
+  "max_exact_relative_residual": 1.7211404399093124e-13,
+  "naive_apparent_gain_max": 0.26501530649317234,
+  "naive_apparent_gain_min": -0.10731803041762383,
+  "naive_apparent_gain_median": 0.007778581453246522,
+  "fraction_points_naive_reports_gain": 0.9200581395348837,
+  "worst_naive_point": {
+    "nu": 2.5500000000000003,
+    "delta": 0.3
+  },
+  "worst_point_refinement": [
+    {
+      "n_cells": 64,
+      "naive_final_rel_e_net": 0.26501530649317234,
+      "exact_max_rel": 2.8969292531572983e-15
+    },
+    {
+      "n_cells": 128,
+      "naive_final_rel_e_net": 0.13247479147468702,
+      "exact_max_rel": 8.056851790792974e-15
+    },
+    {
+      "n_cells": 256,
+      "naive_final_rel_e_net": 0.064282204627085,
+      "exact_max_rel": 1.2468516119873402e-14
+    },
+    {
+      "n_cells": 512,
+      "naive_final_rel_e_net": 0.032139284946942064,
+      "exact_max_rel": 1.218012768178605e-14
+    }
+  ],
+  "worst_point_naive_order": 1.017422439649913,
+  "n_points": 688,
+  "gates": {
+    "exact_ledger_all_pass": true,
+    "stability_agreement_ge_98pct": true,
+    "naive_gain_is_artifact": true
+  }
+}

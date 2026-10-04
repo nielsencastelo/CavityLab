@@ -1,0 +1,38 @@
+{
+  "experiment_id": "EXP-0006",
+  "date_utc": "2026-10-04T12:58:25+00:00",
+  "git_commit": "d0b905c968d393389c56da45440812897fa0fbf2",
+  "git_dirty": true,
+  "cavitylab_version": "0.1.0.dev0",
+  "python": "3.13.9",
+  "numpy": "2.3.5",
+  "scipy": "1.16.3",
+  "platform": "Windows-11-10.0.26200-SP0",
+  "processor": "Intel64 Family 6 Model 143 Stepping 8, GenuineIntel",
+  "precision": "float64",
+  "config_hash": "f372e44bbb2021af",
+  "config": {
+    "delta": 0.02,
+    "nu": 2.0,
+    "tau_end_lossless": 600.0441968356505,
+    "bridge_length_m": 0.1,
+    "bridge_pump_periods": 200,
+    "bridge_n_cells": [
+      50,
+      100,
+      200,
+      400
+    ],
+    "lossy_qualities": [
+      400.0,
+      200.0,
+      100.0
+    ],
+    "lossy_n_th": [
+      0.0,
+      1.0
+    ],
+    "tau_end_lossy": 2001.1945203366981
+  },
+  "wall_time_s": 34.05
+}
