@@ -49,6 +49,17 @@ class _Backend:
             return self.mod.zeros(shape, dtype=getattr(self.mod, self.dtype), device=self.device)
         return self.mod.zeros(shape, dtype=self.dtype)
 
+    def zeros64(self, shape):
+        if self.name == "torch":
+            return self.mod.zeros(shape, dtype=self.mod.float64, device=self.device)
+        return self.mod.zeros(shape, dtype="float64")
+
+    def sum64(self, x):
+        """Row sums accumulated in float64 (the ledger precision), whatever the field dtype."""
+        if self.name == "torch":
+            return x.sum(1, dtype=self.mod.float64)
+        return x.sum(1, dtype="float64")
+
     def asarray(self, a):
         if self.name == "torch":
             a = np.array(a)  # writable copy (torch refuses read-only buffers)
@@ -127,11 +138,9 @@ class FDTD1DBatch:
         cavity_length: float | None = None,
         xp: str = "numpy",
         dtype: str = "float64",
-        use_cuda_graph: bool = False,
     ) -> None:
         self.xp_name = xp
         self.dtype = dtype
-        self.use_cuda_graph = use_cuda_graph  # torch backend only: one graph launch per step
         self.bk = _Backend(xp, dtype)
         self.length = float(length)
         self.n_cells = int(n_cells)
@@ -185,74 +194,6 @@ class FDTD1DBatch:
         self.H = bk.asarray(np.broadcast_to(np.asarray(H_prev, float), (self.batch, self.n_cells)).copy())
         self.D = self._eps(self.time) * self.E
 
-    def _build_cuda_graph(self, E, D, H, eps_cur, cum, sig, port, notport, has_loss, has_mod, coef_h, coef_d):
-        """Capture one full time step (fields + exact and naive ledger) as a CUDA graph.
-
-        All state lives in static tensors updated in place, and the time is kept on the
-        device as a step counter, so a replay needs no host synchronization. The
-        arithmetic is identical to the eager path.
-        """
-        import torch
-
-        dx, dt = self.dx, self.dt
-        dev = self.bk.device
-        k_dev = torch.tensor(float(self.step_index), dtype=torch.float64, device=dev)
-        depth = torch.as_tensor(self._depth, dtype=torch.float64, device=dev)
-        omega = torch.as_tensor(self._omega, dtype=torch.float64, device=dev)
-        phase = torch.as_tensor(self._phase, dtype=torch.float64, device=dev)
-        eps_cur_s = eps_cur.clone()
-        self._graph_cum = cum  # accumulators are updated in place by the graph
-        cum_t = cum  # alias for readability
-
-        def step():
-            H.add_(coef_h * (E[:, 1:] - E[:, :-1]))
-            if has_mod:
-                f = (depth * torch.sin(omega * ((k_dev + 1.0) * dt) + phase)).to(E.dtype)
-                eps_next = self._eps_s_dev[None, :] * (1.0 + f[:, None] * self._profile_dev[None, :])
-            else:
-                eps_next = eps_cur_s
-            rhs = D[:, 1:-1] + coef_d * (H[:, 1:] - H[:, :-1])
-            e_old = E[:, 1:-1].clone()
-            if has_loss:
-                rhs = rhs - 0.5 * dt * sig * e_old
-                d_new = rhs / (1.0 + 0.5 * dt * sig / eps_next[:, 1:-1])
-            else:
-                d_new = rhs
-            e_new = d_new / eps_next[:, 1:-1]
-            if has_mod:
-                cum_t["pump"].add_(0.5 * dx * (D[:, 1:-1] * d_new * (1.0 / eps_next[:, 1:-1]
-                                                                    - 1.0 / eps_cur_s[:, 1:-1])).sum(1))
-                cum_t["naive_pump"].add_(-0.5 * dx * (e_old * e_old * (eps_next[:, 1:-1] - eps_cur_s[:, 1:-1])).sum(1))
-            if has_loss:
-                e_bar = 0.5 * (e_new + e_old)
-                diss = dt * dx * sig * e_bar * e_bar
-                diss_n = dt * dx * sig * e_old * e_old
-                cum_t["loss"].add_((diss * notport).sum(1))
-                cum_t["port"].add_((diss * port).sum(1))
-                cum_t["naive_loss"].add_((diss_n * notport).sum(1))
-                cum_t["naive_port"].add_((diss_n * port).sum(1))
-            D[:, 1:-1].copy_(d_new)
-            E[:, 1:-1].copy_(e_new)
-            if has_mod:
-                eps_cur_s.copy_(eps_next)
-            k_dev.add_(1.0)
-
-        # warm up on a side stream, then capture; the warm-up step must be undone, so
-        # snapshot the state and restore it after capturing
-        snap = [t.clone() for t in (E, D, H, eps_cur_s, k_dev, *cum_t.values())]
-        stream = torch.cuda.Stream()
-        stream.wait_stream(torch.cuda.current_stream())
-        with torch.cuda.stream(stream):
-            step()
-        torch.cuda.current_stream().wait_stream(stream)
-        graph = torch.cuda.CUDAGraph()
-        with torch.cuda.graph(graph):
-            step()
-        for t, s in zip((E, D, H, eps_cur_s, k_dev, *cum_t.values()), snap):
-            t.copy_(s)
-        self._eps_cur_graph = eps_cur_s
-        return graph.replay, eps_cur_s
-
     def run(
         self,
         n_steps: int,
@@ -275,9 +216,10 @@ class FDTD1DBatch:
 
         n_rec = n_steps // record_every + 1
         keys = ("W", "pump", "loss", "port", "naive_W", "naive_pump", "naive_loss", "naive_port")
-        rec = {k: bk.zeros((n_rec, self.batch)) for k in keys}
+        rec = {k: bk.zeros64((n_rec, self.batch)) for k in keys}
         t_rec = np.zeros(n_rec)
-        cum = {k: bk.zeros(self.batch) for k in ("pump", "loss", "port", "naive_pump", "naive_loss", "naive_port")}
+        # ledger accumulators are always float64 (mixed precision when the fields are float32)
+        cum = {k: bk.zeros64(self.batch) for k in ("pump", "loss", "port", "naive_pump", "naive_loss", "naive_port")}
 
         lc = self.cavity_length
         in_cav = self.x_e <= lc + 1e-12 * lc
@@ -303,24 +245,15 @@ class FDTD1DBatch:
 
         E, D, H = self.E, self.D, self.H
         eps_cur = self._eps(self.time)
-        advance = None
-        if bk.name == "torch" and self.use_cuda_graph:
-            advance, eps_cur = self._build_cuda_graph(E, D, H, eps_cur, cum, sig, port, notport,
-                                                      has_loss, has_mod, coef_h, coef_d)
         r = 0
+        s64 = bk.sum64
         for step in range(n_steps + 1):
-            if advance is not None:
-                need_obs = step % record_every == 0 or (capture_steps is not None and step in cap_set)
-                if not need_obs and step < n_steps:
-                    advance()  # one CUDA-graph launch per time step
-                    self.step_index += 1
-                    continue
             H_new = H + coef_h * (E[:, 1:] - E[:, :-1])
             if step % record_every == 0:
                 h_avg = 0.5 * (H_new + H)
                 t_rec[r] = self.time
-                rec["W"][r] = 0.5 * dx * ((D * E).sum(1) + MU0 * (H_new * H).sum(1))
-                rec["naive_W"][r] = 0.5 * dx * ((eps_cur * E * E).sum(1) + MU0 * (h_avg * h_avg).sum(1))
+                rec["W"][r] = 0.5 * dx * (s64(D * E) + MU0 * s64(H_new * H))
+                rec["naive_W"][r] = 0.5 * dx * (s64(eps_cur * E * E) + MU0 * s64(h_avg * h_avg))
                 for k in ("pump", "loss", "port", "naive_pump", "naive_loss", "naive_port"):
                     rec[k][r] = cum[k]
                 for m in modes:
@@ -338,10 +271,6 @@ class FDTD1DBatch:
                 captures["f"][sel] = 1.0 + self._depth[sel] * np.sin(self._omega[sel] * self.time + self._phase[sel])
             if step == n_steps:
                 break
-            if advance is not None:
-                advance()
-                self.step_index += 1
-                continue
             H = H_new
             eps_next = self._eps(self.time + dt) if has_mod else eps_cur
             rhs = D[:, 1:-1] + coef_d * (H[:, 1:] - H[:, :-1])
@@ -353,25 +282,22 @@ class FDTD1DBatch:
                 d_new = rhs
             e_new = d_new / eps_next[:, 1:-1]
             if has_mod:
-                cum["pump"] += 0.5 * dx * (D[:, 1:-1] * d_new * (1.0 / eps_next[:, 1:-1] - 1.0 / eps_cur[:, 1:-1])).sum(1)
-                cum["naive_pump"] += -0.5 * dx * (e_old * e_old * (eps_next[:, 1:-1] - eps_cur[:, 1:-1])).sum(1)
+                cum["pump"] += 0.5 * dx * s64(D[:, 1:-1] * d_new * (1.0 / eps_next[:, 1:-1] - 1.0 / eps_cur[:, 1:-1]))
+                cum["naive_pump"] += -0.5 * dx * s64(e_old * e_old * (eps_next[:, 1:-1] - eps_cur[:, 1:-1]))
             if has_loss:
                 e_bar = 0.5 * (e_new + e_old)
                 diss = dt * dx * sig * e_bar * e_bar
                 diss_n = dt * dx * sig * e_old * e_old
-                cum["loss"] += (diss * notport).sum(1)
-                cum["port"] += (diss * port).sum(1)
-                cum["naive_loss"] += (diss_n * notport).sum(1)
-                cum["naive_port"] += (diss_n * port).sum(1)
+                cum["loss"] += s64(diss * notport)
+                cum["port"] += s64(diss * port)
+                cum["naive_loss"] += s64(diss_n * notport)
+                cum["naive_port"] += s64(diss_n * port)
             D[:, 1:-1] = d_new
             E[:, 1:-1] = e_new
             eps_cur = eps_next
             self.step_index += 1
 
         self.E, self.D, self.H = E, D, H
-        if advance is not None:
-            for k in cum:  # graph accumulators live in their own static tensors
-                cum[k] = self._graph_cum[k]
 
         host = bk.host
         return BatchResult(
@@ -382,5 +308,5 @@ class FDTD1DBatch:
             captures={k: host(v) for k, v in captures.items()},
             meta={"solver": "cavitylab.native_fdtd1d_batch", "backend": self.xp_name, "dx": dx, "dt": dt,
                   "n_cells": self.n_cells, "batch": self.batch, "courant": self.courant, "n_steps": n_steps,
-                  "precision": self.dtype},
+                  "precision": self.dtype, "ledger_precision": "float64"},
         )
