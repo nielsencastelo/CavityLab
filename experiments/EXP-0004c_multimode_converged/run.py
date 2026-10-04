@@ -69,8 +69,8 @@ def spectrum_normalized(n_cells, n_modes):
     diag[:-1] += inv_eps
     diag[1:] += inv_eps
     off = -inv_eps
-    w2 = eigh_tridiagonal(diag / dx**2, off / dx**2, select="i", select_range=(0, n_modes))[0]
-    w2 = w2[w2 > 1e-9][:n_modes]  # drop the static H = const null mode
+    # index 0 is the static null mode (H = const, rank-deficient G diag G^T); skip it explicitly
+    w2 = eigh_tridiagonal(diag / dx**2, off / dx**2, select="i", select_range=(1, n_modes))[0]
     return np.sqrt(w2)
 
 

@@ -225,3 +225,4 @@ experiments/**/results/raw/
 *.h5
 *.zarr/
 ~$*.docx
+.venv-gpu/
