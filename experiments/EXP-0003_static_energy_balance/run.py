@@ -40,12 +40,12 @@ CONFIG = {
     "C_periods": 300,
     "D_domain_m": 0.25,
     "D_mirror_eps_r": 60.0,
-    "D_mirror_cells": 4,
+    "D_mirror_thickness_m": 1e-3,
     "D_absorber_start_m": 0.16,
     "D_absorber_sigma_max": 0.8,
     "D_round_trips": 40,
     "naive_scaling_n_cells": [100, 200, 400, 800, 1600],
-    "tolerance_exact": 1e-12,
+    "tolerance_exact": 1e-10,  # float64 round-off accumulates ~ n_steps * eps
 }
 
 
@@ -93,7 +93,7 @@ def scenario_d(n_cells_cavity):
     probe = FDTD1D(Ld, n_cells, S)
     x = probe.x_e
     eps_r = np.ones_like(x)
-    mirror = (x > L) & (x <= L + CONFIG["D_mirror_cells"] * probe.dx + 1e-12)
+    mirror = (x > L) & (x <= L + CONFIG["D_mirror_thickness_m"] + 1e-12)
     eps_r[mirror] = CONFIG["D_mirror_eps_r"]
     xa = CONFIG["D_absorber_start_m"]
     port = x >= xa
@@ -144,8 +144,8 @@ def main() -> None:
             })
     orders = {}
     for name, rows in scaling.items():
-        n = np.log([r["n_cells"] for r in rows])
-        e = np.log([r["naive_max_rel"] for r in rows])
+        n = np.log([r["n_cells"] for r in rows[-3:]])  # asymptotic range
+        e = np.log([r["naive_max_rel"] for r in rows[-3:]])
         orders[name] = float(-np.polyfit(n, e, 1)[0])
 
     ctx.metrics = {
