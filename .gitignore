@@ -218,3 +218,10 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# CavityLab: heavy raw simulation outputs stay out of Git (manifests/metrics/figures are tracked)
+experiments/**/results/raw/
+*.npz
+*.h5
+*.zarr/
+~$*.docx
