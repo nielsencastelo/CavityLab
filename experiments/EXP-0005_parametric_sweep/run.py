@@ -29,7 +29,7 @@ from cavitylab.core.manifest import config_hash
 from cavitylab.experiments.runner import ExperimentContext, setup_matplotlib
 from cavitylab.geometry import Cavity1D
 from cavitylab.solvers.fdtd1d import FDTD1D
-from cavitylab.solvers.fdtd1d_batch import FDTD1DBatch
+from cavitylab.solvers.fdtd1d_batch import FDTD1DBatch, gpu_available
 
 HERE = Path(__file__).parent
 CONFIG = {
@@ -42,7 +42,7 @@ CONFIG = {
     "ledger_run_mode_periods": 30,
     "pump_phase_rad": math.pi / 4,
     "refinement_n_cells": [64, 128, 256, 512],
-    "backend": "numpy",
+    "backend": "auto",  # torch (CUDA GPU) when available, else numpy
 }
 
 
@@ -81,6 +81,9 @@ def ledger_batch(deltas_flat, nus_flat, Q, n_cells):
 
 
 def main() -> None:
+    if CONFIG["backend"] == "auto":
+        CONFIG["backend"] = "torch" if gpu_available() else "numpy"
+    print("backend:", CONFIG["backend"], flush=True)
     ctx = ExperimentContext("EXP-0005", HERE, CONFIG)
     N = CONFIG["n_cells"]
 
@@ -94,7 +97,7 @@ def main() -> None:
     e_net_naive = res.e_net(naive=True)
     exact_res = (np.abs(e_net).max(0) / scale).reshape(D.shape)
     naive_gain = (e_net_naive[-1] / scale).reshape(D.shape)
-    print("map A done")
+    print("map A done", flush=True)
 
     rows = []
     for idx, (d, nu) in enumerate(zip(D.ravel(), NU.ravel())):
@@ -130,7 +133,7 @@ def main() -> None:
     # ---- map B: high-Q Floquet map (higher-order tongues)
     B = CONFIG["map_B"]
     nus_b, deltas_b, mu_fdtd_b, mu_theory_b = floquet_maps(B, N)
-    print("map B done")
+    print("map B done", flush=True)
 
     def agreement(a, b):
         return float(np.mean((a > 0) == (b > 0)))
